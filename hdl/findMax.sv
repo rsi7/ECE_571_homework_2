@@ -35,7 +35,7 @@ module findMax (
 	localparam	RECEIVING	=	2'b01;		// state: FSM is receing data
 	localparam	DONE		=	2'b10;		// state: FSM has finished processing data
 
-	logic		[1:0]		state,			// register to hold current FSM state
+	logic		[1:0]		state;			// register to hold current FSM state
 	logic		[1:0]		next;			// register to hold pending FSM state
 
 	/*************************************************************************/

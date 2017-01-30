@@ -59,7 +59,7 @@ module findMax_testbench;
 
 	// keep the clock ticking
 	always begin
-		#1 clk <= !clk
+		#0.5 clk_tb <= !clk_tb;
 	end
 
 	// main simulation loop
@@ -73,25 +73,21 @@ module findMax_testbench;
 		fhandle = $fopen("C:/Users/riqbal/Desktop/findMax_results.txt");
 
 		// toggle the resets to start the FSM
-		#5 reset = 1'b1;
-		#5 reset = 1'b0;
+		#5 reset_tb = 1'b1;
+		#5 reset_tb = 1'b0;
 		#5
 
 		for (int j = 1; j <= trials; j++) begin
 
 			#5 bytes = $urandom_range(16,1);
-			start = 1'b1;
+			start_tb = 1'b1;
 
 			for (int i = 1; i <= bytes; i++) begin
-				#1 inputA_tb = $urandom_range(8'b11111111,8'b0)
-				fstrobe(fhandle,"Time:\t%t\t\tinputA: %d\t\tmaxValue: %d\t\t", $time, inputA_tb, maxValue_tb);
+				#1 inputA_tb = $urandom_range(8'b11111111,8'b0);
+				$fstrobe(fhandle,"Time:\t%t\t\tinputA: %d\t\tmaxValue: %d\t\t", $time, inputA_tb, maxValue_tb);
 			end
 
-			start = 1'b0;
-
-		end
-
-		// print results to file
+			start_tb = 1'b0;
 
 		end
 
