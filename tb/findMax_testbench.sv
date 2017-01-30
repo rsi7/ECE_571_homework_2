@@ -19,6 +19,7 @@
 module findMax_testbench;
 
 	timeunit 1ns;
+	timeprecision 100ps;
 
 	/*************************************************************************/
 	/* Local parameters and variables										 */
@@ -75,24 +76,25 @@ module findMax_testbench;
 		// toggle the resets to start the FSM
 		#5 reset_tb = 1'b1;
 		#5 reset_tb = 1'b0;
-		#5
 
 		for (int j = 1; j <= trials; j++) begin
 
-			#5 bytes = $urandom_range(16,1);
-			start_tb = 1'b1;
+			bytes = $urandom_range(16,1);
+			$fwrite(fhandle,"\nNumber of bytes to send: %d\n", bytes);
 
 			for (int i = 1; i <= bytes; i++) begin
 				#1 inputA_tb = $urandom_range(8'b11111111,8'b0);
-				$fstrobe(fhandle,"Time:\t%t\t\tinputA: %d\t\tmaxValue: %d\t\t", $time, inputA_tb, maxValue_tb);
+				start_tb = 1'b1;
+				$fstrobe(fhandle,"Time:%t\t\tinputA: %d\t\tmaxValue: %d\t\t", $time, inputA_tb, maxValue_tb);
 			end
 
-			start_tb = 1'b0;
-
+			#1 start_tb = 1'b0;
+			$fstrobe(fhandle,"Time:%t\t\t\t\t\t\tmaxValue: %d\t\t", $time, maxValue_tb);
+			#5;
 		end
 
 		// wrap up file writing & finish simulation
-		$fwrite(fhandle, "\n\nEND OF FILE");
+		$fwrite(fhandle, "\nEND OF FILE");
 		$fclose(fhandle);
 		$stop;
 
