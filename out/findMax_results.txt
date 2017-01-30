@@ -1,0 +1,112 @@
+
+Number of bytes to send:   8
+Time:    11ns		inputA: 124		maxValue:   0		
+Time:    12ns		inputA: 156		maxValue: 124		
+Time:    13ns		inputA:  28		maxValue: 156		
+Time:    14ns		inputA: 232		maxValue: 156		
+Time:    15ns		inputA: 167		maxValue: 232		
+Time:    16ns		inputA:  22		maxValue: 232		
+Time:    17ns		inputA: 196		maxValue: 232		
+Time:    18ns		inputA:   0		maxValue: 232		
+Time:    19ns						maxValue: 232		
+
+Number of bytes to send:  10
+Time:    25ns		inputA: 248		maxValue:   0		
+Time:    26ns		inputA: 251		maxValue: 248		
+Time:    27ns		inputA:  17		maxValue: 251		
+Time:    28ns		inputA: 162		maxValue: 251		
+Time:    29ns		inputA: 252		maxValue: 251		
+Time:    30ns		inputA: 165		maxValue: 252		
+Time:    31ns		inputA: 222		maxValue: 252		
+Time:    32ns		inputA: 150		maxValue: 252		
+Time:    33ns		inputA: 144		maxValue: 252		
+Time:    34ns		inputA:  23		maxValue: 252		
+Time:    35ns						maxValue: 252		
+
+Number of bytes to send:  15
+Time:    41ns		inputA: 131		maxValue:   0		
+Time:    42ns		inputA: 134		maxValue: 131		
+Time:    43ns		inputA:  20		maxValue: 134		
+Time:    44ns		inputA: 205		maxValue: 134		
+Time:    45ns		inputA:  92		maxValue: 205		
+Time:    46ns		inputA:  79		maxValue: 205		
+Time:    47ns		inputA: 178		maxValue: 205		
+Time:    48ns		inputA: 151		maxValue: 205		
+Time:    49ns		inputA: 255		maxValue: 205		
+Time:    50ns		inputA:  30		maxValue: 255		
+Time:    51ns		inputA: 172		maxValue: 255		
+Time:    52ns		inputA:  44		maxValue: 255		
+Time:    53ns		inputA: 228		maxValue: 255		
+Time:    54ns		inputA: 158		maxValue: 255		
+Time:    55ns		inputA: 133		maxValue: 255		
+Time:    56ns						maxValue: 255		
+
+Number of bytes to send:   3
+Time:    62ns		inputA: 155		maxValue:   0		
+Time:    63ns		inputA:  82		maxValue: 155		
+Time:    64ns		inputA: 173		maxValue: 155		
+Time:    65ns						maxValue: 173		
+
+Number of bytes to send:   2
+Time:    71ns		inputA:  24		maxValue:   0		
+Time:    72ns		inputA: 153		maxValue:  24		
+Time:    73ns						maxValue: 153		
+
+Number of bytes to send:   1
+Time:    79ns		inputA:   2		maxValue:   0		
+Time:    80ns						maxValue:   2		
+
+Number of bytes to send:  13
+Time:    86ns		inputA: 225		maxValue:   0		
+Time:    87ns		inputA: 136		maxValue: 225		
+Time:    88ns		inputA:  47		maxValue: 225		
+Time:    89ns		inputA:  53		maxValue: 225		
+Time:    90ns		inputA:  20		maxValue: 225		
+Time:    91ns		inputA:  15		maxValue: 225		
+Time:    92ns		inputA:  17		maxValue: 225		
+Time:    93ns		inputA:  45		maxValue: 225		
+Time:    94ns		inputA:  72		maxValue: 225		
+Time:    95ns		inputA: 215		maxValue: 225		
+Time:    96ns		inputA:  29		maxValue: 225		
+Time:    97ns		inputA: 193		maxValue: 225		
+Time:    98ns		inputA: 245		maxValue: 225		
+Time:    99ns						maxValue: 245		
+
+Number of bytes to send:   9
+Time:   105ns		inputA: 130		maxValue:   0		
+Time:   106ns		inputA: 130		maxValue: 130		
+Time:   107ns		inputA: 113		maxValue: 130		
+Time:   108ns		inputA: 193		maxValue: 130		
+Time:   109ns		inputA:  21		maxValue: 193		
+Time:   110ns		inputA:  83		maxValue: 193		
+Time:   111ns		inputA: 126		maxValue: 193		
+Time:   112ns		inputA: 143		maxValue: 193		
+Time:   113ns		inputA:  57		maxValue: 193		
+Time:   114ns						maxValue: 193		
+
+Number of bytes to send:  15
+Time:   120ns		inputA:  56		maxValue:   0		
+Time:   121ns		inputA: 171		maxValue:  56		
+Time:   122ns		inputA: 161		maxValue: 171		
+Time:   123ns		inputA: 122		maxValue: 171		
+Time:   124ns		inputA:  24		maxValue: 171		
+Time:   125ns		inputA: 129		maxValue: 171		
+Time:   126ns		inputA: 184		maxValue: 171		
+Time:   127ns		inputA: 129		maxValue: 184		
+Time:   128ns		inputA: 225		maxValue: 184		
+Time:   129ns		inputA: 248		maxValue: 225		
+Time:   130ns		inputA: 162		maxValue: 248		
+Time:   131ns		inputA:  47		maxValue: 248		
+Time:   132ns		inputA:  13		maxValue: 248		
+Time:   133ns		inputA: 151		maxValue: 248		
+Time:   134ns		inputA:  56		maxValue: 248		
+Time:   135ns						maxValue: 248		
+
+Number of bytes to send:   4
+Time:   141ns		inputA: 193		maxValue:   0		
+Time:   142ns		inputA:  77		maxValue: 193		
+Time:   143ns		inputA:  26		maxValue: 193		
+Time:   144ns		inputA: 117		maxValue: 193		
+Time:   145ns						maxValue: 193		
+
+END OF FILE

@@ -7,7 +7,3 @@ $ cat .gitignore
 # available on D2L course website
 
 /docs/*
-
-# ignore output generation
-
-/out/*
