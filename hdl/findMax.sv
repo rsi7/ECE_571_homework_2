@@ -16,14 +16,14 @@ module findMax (
 	/* Top-level port declarations											 */
 	/*************************************************************************/
 
-	input	logic			clk,			// clock signal to the circuit
-	input 	logic			reset,			// assert high to reset the circuit
-	input	logic			start,			// assert high to start data input
+	input	logic						clk,		// clock signal to the circuit
+	input 	logic						reset,		// assert high to reset the circuit
+	input	logic						start,		// assert high to start data input
 
-	input	logic	[7:0]	inputA,			// data bytes to be considered
+	input	logic	unsigned	[7:0]	inputA,		// data bytes to be considered
 
-	output	logic	[7:0]	maxValue,		// current max value of the sequence
-	output					done			// goes high when final value determined
+	output	logic	unsigned	[7:0]	maxValue,	// current max value of the sequence
+	output	logic						done		// goes high when final value determined
 
 	);
 
@@ -134,6 +134,7 @@ module findMax (
 					end
 
 					done <= 1'b0;
+				end
 
 				// set done flag high to indicate processing finished
 				DONE : begin
@@ -141,6 +142,8 @@ module findMax (
 					done <= 1'b1;
 				end
 
-			endcase			
+			endcase	
 		end
+	end
+
 endmodule

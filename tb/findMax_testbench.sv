@@ -21,23 +21,21 @@ module findMax_testbench;
 	timeunit 1ns;
 
 	/*************************************************************************/
-	/* Top-level port declarations											 */
-	/************************\************************************************/
-
-
-	logic 			clk_tb;				// clock signal to the DUT
-	logic 			reset_tb;			// active-high reset to the DUT
-	logic 			start_tb;			// active-high start signal to the DUT
-	logic	[7:0]	inputA_tb;			// data byte inputs to the DUT
-	logic	[7:0]	maxValue_tb;		// maximum value returned by DUT
-	logic 			done_tb;			// active-high completion signal from DUT
-
-	int 			fhandle;			// integer to hold file location
-
+	/* Local parameters and variables										 */
 	/*************************************************************************/
-	/* Global Assignments													 */
-	/*************************************************************************/	
 
+	localparam					trials = 10;
+
+	logic 						clk_tb		= 1'b0;		// clock signal to the DUT
+	logic 						reset_tb	= 1'b0;		// active-high reset to the DUT
+	logic 						start_tb	= 1'b0;		// active-high start signal to the DUT
+	logic	unsigned	[7:0]	inputA_tb	= 1'b0;		// data byte inputs to the DUT
+
+	logic	unsigned	[7:0]	maxValue_tb;			// maximum value returned by DUT
+	logic 						done_tb;				// active-high completion signal from DUT
+
+	int 						fhandle;				// integer to hold file location
+	byte	unsigned			bytes;
 
 	/*************************************************************************/
 	/* Instantiating the DUT 												 */
@@ -59,20 +57,41 @@ module findMax_testbench;
 	/* Running the testbench simluation										 */
 	/*************************************************************************/
 
-	// format time units for printing later
-	// also setup the output file location
-
-	initial begin
-		$timeformat(-9, 0, "ns", 8);
-		fhandle = $fopen("C:/Users/riqbal/Desktop/findMax_results.txt");
+	// keep the clock ticking
+	always begin
+		#1 clk <= !clk
 	end
 
 	// main simulation loop
 
 	initial begin
 
-			// print results to file
-			$fstrobe(fhandle, "Time:\t%t\t\tYear: %d\t\tMonth: %d\t\tDay of Month: %d\t\tDay of Year: %d\t", $time, year_tester, month_tester, dayOfMonth_tester, dayOfYear_tester);
+		// format time units for printing later
+		// also setup the output file location
+
+		$timeformat(-9, 0, "ns", 8);
+		fhandle = $fopen("C:/Users/riqbal/Desktop/findMax_results.txt");
+
+		// toggle the resets to start the FSM
+		#5 reset = 1'b1;
+		#5 reset = 1'b0;
+		#5
+
+		for (int j = 1; j <= trials; j++) begin
+
+			#5 bytes = $urandom_range(16,1);
+			start = 1'b1;
+
+			for (int i = 1; i <= bytes; i++) begin
+				#1 inputA_tb = $urandom_range(8'b11111111,8'b0)
+				fstrobe(fhandle,"Time:\t%t\t\tinputA: %d\t\tmaxValue: %d\t\t", $time, inputA_tb, maxValue_tb);
+			end
+
+			start = 1'b0;
+
+		end
+
+		// print results to file
 
 		end
 
@@ -80,6 +99,7 @@ module findMax_testbench;
 		$fwrite(fhandle, "\n\nEND OF FILE");
 		$fclose(fhandle);
 		$stop;
+
 	end
 
 endmodule
