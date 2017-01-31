@@ -27,17 +27,17 @@ module findMax_testbench;
 	/* Local parameters and variables										 */
 	/*************************************************************************/
 
-	ulogic1		clk_tb			= 1'b0;		// clock signal to the DUT
-	ulogic1		reset_tb		= 1'b0;		// active-high reset to the DUT
-	ulogic1		start_tb		= 1'b0;		// active-high start signal to the DUT
-	ulogic8		inputA_tb		= 1'b0;		// data byte inputs to the DUT
+	ulogic1		clk_tb			= '0;		// clock signal to the DUT
+	ulogic1		reset_tb		= '0;		// active-high reset to the DUT
+	ulogic1		start_tb		= '0;		// active-high start signal to the DUT
+	ulogic8		inputA_tb		= '0;		// data byte inputs to the DUT
 
 	ulogic8		maxValue_tb;				// maximum value returned by DUT
 	ulogic8		minValue_tb;				// minimum value returned by DUT
 	ulogic1		done_tb;					// active-high completion signal from DUT
 
 	int 		fhandle;					// integer to hold file location
-	uint8		bytes;						// # of data bytes to send in a sequence
+	uint8		bytes;						// number of bytes to send in a sequence
 
 	/*************************************************************************/
 	/* Instantiating the DUT												 */
@@ -76,21 +76,27 @@ module findMax_testbench;
 		fhandle = $fopen("C:/Users/riqbal/Desktop/findMax_results.txt");
 
 		// toggle the resets to start the FSM
-		#5 reset_tb = 1'b1;
-		#5 reset_tb = 1'b0;
+		#5 reset_tb = '1;
+		#5 reset_tb = '0;
 
+		// run the simulation for some number of sequences
 		for (int j = 1; j <= trials; j++) begin
 
+			// choose how many bytes to send this sequence
 			bytes = $urandom_range(16,1);
 			$fwrite(fhandle,"\nSending %d number of bytes to module...\n", bytes);
 
+			// loop the number of bytes in one sequence
 			for (int i = 1; i <= bytes; i++) begin
-				#1 inputA_tb = $urandom_range(8'b11111111,8'b0);
-				start_tb = 1'b1;
+
+				// send a byte between 0 - 255 on inputA
+				#1 inputA_tb = $urandom_range(8'd255,8'b0);
+				start_tb = '1;
 				$fstrobe(fhandle,"Time:%t\t\tinputA: %d\t\tmaxValue: %d\t\tminValue: %d\t\t", $time, inputA_tb, maxValue_tb, minValue_tb);
 			end
 
-			#1 start_tb = 1'b0;
+			// finish sequence by deasserting start
+			#1 start_tb = '0;
 			$fstrobe(fhandle,"Time:%t\t\t\t\t\t\tmaxValue: %d\t\tminValue: %d\t\t", $time, maxValue_tb, minValue_tb);
 			#5;
 		end

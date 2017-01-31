@@ -8,6 +8,16 @@
 // Takes in a sequence of unsigned bytes and determines the largest & smallest
 // values that were sent. Implemented with a three-block finite state machine.
 //
+// The first block handles the state advancement - if reset is applied, the
+// FSM will jump to a known idle state. Otherwise, it will continue advancing
+// the state.
+//
+// The second block handles state transitions between IDLE, RECEIVING, and
+// DONE. These are the states specified by the package "definitions.pkg"
+//
+// The last state handles the outputs for minValue, maxValue, and done
+// depending on the current state.
+//
 ///////////////////////////////////////////////////////////////////////////////
 
 `include "definitions.pkg"
@@ -34,8 +44,8 @@ module findMax (
 	/* Local parameters and variables										 */
 	/*************************************************************************/
 
-	ulogic2		[1:0]		state;		// register to hold current FSM state
-	ulogic2		[1:0]		next;		// register to hold pending FSM state
+	state_t		state	=	IDLE;		// register to hold current FSM state
+	state_t		next	=	IDLE;		// register to hold pending FSM state
 
 	/*************************************************************************/
 	/* FSM Block 1: reset & state advancement								 */
@@ -84,9 +94,6 @@ module findMax (
 			// final results only last 1 cycle
 			DONE : next <= IDLE;
 
-			// set next state to unknown if case statement fails
-			default : next <= 2'bx;
-
 		endcase
 	end
 
@@ -94,13 +101,13 @@ module findMax (
 	/* FSM Block 3: assigning outputs										 */
 	/*************************************************************************/
 
-	always@(posedge clk or negedge reset) begin
+	always@(posedge clk or posedge reset) begin
 
 		// if reset was asserted, clear the outputs
 		if (reset) begin
-			maxValue	<= 8'b0;
-			minValue	<= 8'd255;
-			done		<= 1'b0;
+			maxValue	<= '0;
+			minValue	<= '1;
+			done		<= '0;
 		end
 
 		else begin
@@ -118,11 +125,11 @@ module findMax (
 					end
 
 					else begin
-						maxValue <= 8'b0;
-						minValue <= 8'd255;
+						maxValue <= '0;
+						minValue <= '1;
 					end
 
-					done <= 1'b0;
+					done <= '0;
 				end
 
 				// compare current maxValue against new data input
@@ -143,22 +150,23 @@ module findMax (
 						minValue <= minValue;
 					end
 
-					done <= 1'b0;
+					done <= '0;
 				end
 
 				// set done flag high to indicate processing finished
 				DONE : begin
 					maxValue <= maxValue;
 					minValue <= minValue;
-					done <= 1'b1;
+					done <= '1;
 				end
 
 				// set outputs to unknown if case statement fails
 				default : begin
-					maxValue <= 8'bx;
-					minValue <= 8'bx;
-					done <= 1'bx;
+					maxValue <= 'x;
+					minValue <= 'x;
+					done <= 'x;
 				end
+
 			endcase	
 		end
 	end
