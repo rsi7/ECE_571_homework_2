@@ -10,11 +10,13 @@
 // 0 to 255. The number of bytes sent varies between 1 & 16.
 //
 //
-//The testbench will run for a user-specified number of trials before ending.
+// The testbench will run for a user-specified number of trials before ending.
 // It will write results to a local textfile specifying the data bytes sent out
 // and the maxValue & minValue returned by the DUT.
 // 
 ///////////////////////////////////////////////////////////////////////////////
+
+`include "definitions.pkg"
 
 module findMax_testbench;
 
@@ -25,21 +27,20 @@ module findMax_testbench;
 	/* Local parameters and variables										 */
 	/*************************************************************************/
 
-	localparam					trials = 10;
+	ulogic1		clk_tb			= 1'b0;		// clock signal to the DUT
+	ulogic1		reset_tb		= 1'b0;		// active-high reset to the DUT
+	ulogic1		start_tb		= 1'b0;		// active-high start signal to the DUT
+	ulogic8		inputA_tb		= 1'b0;		// data byte inputs to the DUT
 
-	logic 						clk_tb		= 1'b0;		// clock signal to the DUT
-	logic 						reset_tb	= 1'b0;		// active-high reset to the DUT
-	logic 						start_tb	= 1'b0;		// active-high start signal to the DUT
-	logic	unsigned	[7:0]	inputA_tb	= 1'b0;		// data byte inputs to the DUT
+	ulogic8		maxValue_tb;				// maximum value returned by DUT
+	ulogic8		minValue_tb;				// minimum value returned by DUT
+	ulogic1		done_tb;					// active-high completion signal from DUT
 
-	logic	unsigned	[7:0]	maxValue_tb;			// maximum value returned by DUT
-	logic 						done_tb;				// active-high completion signal from DUT
-
-	int 						fhandle;				// integer to hold file location
-	byte	unsigned			bytes;
+	int 		fhandle;					// integer to hold file location
+	uint8		bytes;						// # of data bytes to send in a sequence
 
 	/*************************************************************************/
-	/* Instantiating the DUT 												 */
+	/* Instantiating the DUT												 */
 	/*************************************************************************/
 
 	findMax DUT (
@@ -50,6 +51,7 @@ module findMax_testbench;
 		.inputA			(inputA_tb),		// I [7:0] data byts to be considered
 
 		.maxValue		(maxValue_tb),		// O [7:0] current max value of the sequence
+		.minValue		(minValue_tb),		// O [7:0] current min value of the sequence
 		.done			(done_tb)			// O [0:0] goes high when final value determined
 
 		);
@@ -80,16 +82,16 @@ module findMax_testbench;
 		for (int j = 1; j <= trials; j++) begin
 
 			bytes = $urandom_range(16,1);
-			$fwrite(fhandle,"\nNumber of bytes to send: %d\n", bytes);
+			$fwrite(fhandle,"\nSending %d number of bytes to module...\n", bytes);
 
 			for (int i = 1; i <= bytes; i++) begin
 				#1 inputA_tb = $urandom_range(8'b11111111,8'b0);
 				start_tb = 1'b1;
-				$fstrobe(fhandle,"Time:%t\t\tinputA: %d\t\tmaxValue: %d\t\t", $time, inputA_tb, maxValue_tb);
+				$fstrobe(fhandle,"Time:%t\t\tinputA: %d\t\tmaxValue: %d\t\tminValue: %d\t\t", $time, inputA_tb, maxValue_tb, minValue_tb);
 			end
 
 			#1 start_tb = 1'b0;
-			$fstrobe(fhandle,"Time:%t\t\t\t\t\t\tmaxValue: %d\t\t", $time, maxValue_tb);
+			$fstrobe(fhandle,"Time:%t\t\t\t\t\t\tmaxValue: %d\t\tminValue: %d\t\t", $time, maxValue_tb, minValue_tb);
 			#5;
 		end
 
